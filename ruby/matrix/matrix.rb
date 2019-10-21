@@ -3,7 +3,11 @@ class Matrix
   attr_reader :columns
 
   def initialize(matrix_string)
-    @rows = matrix_string.split("\n").map { |row| row.split.map(&:to_i) }
+    @rows = extract_rows(matrix_string)
     @columns = rows.transpose
+  end
+
+  private def extract_rows(matrix_string)
+    matrix_string.each_line.map { |row| row.split.map(&:to_i) }
   end
 end
