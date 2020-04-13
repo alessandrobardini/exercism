@@ -3,17 +3,16 @@ class Sieve
     @limit = limit
   end
 
+  attr_reader :limit
+
   def primes
-    return [] if @limit == 1
-    prime_numbers = Array.new(@limit, true)
-    (1..@limit).to_a.each do | i | 
-      if prime_numbers[i]
-        (i ** i..@limit).to_a.each do | j | 
-          prime_numbers[j] = false
-        end
+    numbers = Array.new(limit + 1, true)
+    numbers[0] = numbers[1] = false
+    (2..Math.sqrt(limit)).each do |number|
+      (2 * number).step(limit, number) do |multiple|
+        numbers[multiple] = false
       end
     end
-    prime_numbers
-    #prime_numbers.each_with_index.map{|n, i| i if n == true}.compact
+    (2..limit).select { |num| numbers[num] }
   end
 end
